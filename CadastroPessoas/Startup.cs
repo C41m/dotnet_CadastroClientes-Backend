@@ -3,11 +3,6 @@ using CadastroPessoas.Service.CidadeService;
 using CadastroPessoas.Service.CidadesService;
 using CadastroPessoas.Service.ClienteService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 
 namespace CadastroPessoas
 {
@@ -44,17 +39,18 @@ namespace CadastroPessoas
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI( options =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "CadastroClientesApi");
+                options.RoutePrefix = String.Empty;
+            });
+
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
