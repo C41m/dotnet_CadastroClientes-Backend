@@ -46,12 +46,22 @@ namespace CadastroPessoas
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
 
             app.UseCors("MyCorsPolicy");
-            app.UseHttpsRedirection();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
