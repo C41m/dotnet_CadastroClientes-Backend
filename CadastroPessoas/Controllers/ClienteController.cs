@@ -9,10 +9,6 @@ using System.Data.Common;
 
 namespace CadastroPessoas.Controllers
 {
-    [Route("/")]
-
-
-
     [Route("api/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase
