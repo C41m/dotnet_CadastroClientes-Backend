@@ -6,12 +6,15 @@ Projeto realizado com as tecnologias .Net 8.0 Core (ASP.NET Core, Entity Framewo
 
 A comunicação entre o back-end e o front-end é feita através de requisições HTTP, utilizando o protocolo RESTful para a troca de dados.
 
+Link do repositório do frontend: [C41m/react_CadastroClientes-Frontend (github.com)](https://github.com/C41m/react_CadastroClientes-Frontend)
+
 ## Funcionalidades da API
 Esta API permite o gerenciamento de cidades e clientes, incluindo operações como ler, criar, atualizar e excluir informações destas.
 
 ## Cidades - Endpoints Disponíveis
 ### GET /api/Cidade
-	Retorna uma lista de todas as cidades cadastradas.
+Retorna uma lista de todas as cidades cadastradas.
+
 #### Respostas
 - 200 OK: Retorna a lista de cidades.
 - 400 Bad Request: Se os dados da solicitação forem inválidos.
