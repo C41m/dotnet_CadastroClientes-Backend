@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroPessoas.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("cidades")]
     [ApiController]
-    public class CidadeController : ControllerBase
+    public class CidadesController : ControllerBase
     {
         private readonly ICidadeInterface _cidadeInterface;
 
-        public CidadeController(ICidadeInterface CidadeController)
+        public CidadesController(ICidadeInterface CidadeController)
         {
             _cidadeInterface = CidadeController;
         }
@@ -91,8 +91,8 @@ namespace CadastroPessoas.Controllers
             }
         }
 
-        [HttpGet("cidade/{cidade}")]
-        public async Task<ActionResult<CidadeModel>> GetCidadeByName(string cidade)
+        [HttpGet("cidade/")]
+        public async Task<ActionResult<CidadeModel>> GetCidadeByName([FromQuery] string cidade)
         {
             if (!ModelState.IsValid)
             {
@@ -147,8 +147,8 @@ namespace CadastroPessoas.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<CidadeModel>>> UpdateCidade(CidadeUpdateDto newUpdateCidade)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<CidadeModel>>> UpdateCidade(int id, CidadeUpdateDto newUpdateCidade)
         {
             if (!ModelState.IsValid)
             {
@@ -157,7 +157,7 @@ namespace CadastroPessoas.Controllers
 
             var updateCidade = new CidadeModel
             {
-                Id = newUpdateCidade.Id,
+                Id = id,
                 Cidade = newUpdateCidade.Cidade,
                 Estado = newUpdateCidade.Estado
             };
@@ -183,7 +183,7 @@ namespace CadastroPessoas.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<List<CidadeModel>>> DeleteCidade(int id)
         {
             if (!ModelState.IsValid)

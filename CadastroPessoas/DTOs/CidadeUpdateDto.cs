@@ -5,9 +5,6 @@ namespace CadastroPessoas.DTOs
 {
     public class CidadeUpdateDto
     {
-        [Required(ErrorMessage = "Preencher campo de ID")]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Preencher campo cidade.")]
         public string Cidade { get; set; }
 

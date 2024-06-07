@@ -9,13 +9,13 @@ using System.Data.Common;
 namespace CadastroPessoas.Controllers
 {
     
-    [Route("api/[controller]")]
+    [Route("clientes")]
     [ApiController]
-    public class ClienteController : ControllerBase
+    public class ClientesController : ControllerBase
     {
         private readonly IClienteInterface _clienteInterface;
 
-        public ClienteController(IClienteInterface clienteInterface)
+        public ClientesController(IClienteInterface clienteInterface)
         {
             _clienteInterface = clienteInterface;
         }
@@ -44,8 +44,7 @@ namespace CadastroPessoas.Controllers
 
         }
 
-
-        [HttpGet("FindById/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ClienteModel>> GetClienteById(int id)
         {
             if (!ModelState.IsValid)
@@ -69,8 +68,8 @@ namespace CadastroPessoas.Controllers
             }
         }
 
-        [HttpGet("FindByName")]
-        public async Task<ActionResult<List<ClienteModel>>> GetClientesByNomeSobrenome(string? nome, string? sobrenome)
+        [HttpGet("buscar")]
+        public async Task<ActionResult<List<ClienteModel>>> GetClientesByNomeSobrenome([FromQuery] string? nome, [FromQuery] string? sobrenome)
         {
             try
             {
@@ -123,8 +122,8 @@ namespace CadastroPessoas.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<ClienteModel>>> UpdateCliente(ClienteUpdateDto editadoClienteDto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<ClienteModel>>> UpdateCliente(int id, ClienteUpdateDto editadoClienteDto)
         {
             if (!ModelState.IsValid)
             {
@@ -133,7 +132,7 @@ namespace CadastroPessoas.Controllers
 
             var editadoCliente = new ClienteModel
             {
-                Id = editadoClienteDto.Id,
+                Id = id,
                 Nome = editadoClienteDto.Nome,
                 Sobrenome = editadoClienteDto.Sobrenome,
                 Sexo = editadoClienteDto.Sexo,
@@ -144,7 +143,7 @@ namespace CadastroPessoas.Controllers
 
             try
             {
-                var cliente = await _clienteInterface.UpdateCliente(editadoCliente);
+                var cliente = await _clienteInterface.UpdateCliente(id, editadoCliente);
 
                 return Ok(cliente);
             }
@@ -164,7 +163,7 @@ namespace CadastroPessoas.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<List<ClienteModel>>> DeleteCliente(int id)
         {
             if (!ModelState.IsValid)

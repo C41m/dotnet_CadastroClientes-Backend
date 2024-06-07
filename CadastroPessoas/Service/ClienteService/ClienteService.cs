@@ -113,7 +113,7 @@ namespace CadastroPessoas.Service.ClienteService
             }
         }
 
-        public async Task<List<ClienteModel>> UpdateCliente(ClienteModel editadoCliente)
+        public async Task<List<ClienteModel>> UpdateCliente(int id, ClienteModel editadoCliente)
         {
             try
             {
@@ -132,6 +132,7 @@ namespace CadastroPessoas.Service.ClienteService
                 }
 
                 // Atualiza cliente com os novos valores.
+                client.Id = id;
                 client.Nome = editadoCliente.Nome;
                 client.Sobrenome = editadoCliente.Sobrenome;
                 client.Sexo = editadoCliente.Sexo;
