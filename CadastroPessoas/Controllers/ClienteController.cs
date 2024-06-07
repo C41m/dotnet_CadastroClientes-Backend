@@ -89,7 +89,7 @@ namespace CadastroPessoas.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCliente(ClienteCreateDto novoClienteDto)
+        public async Task<ActionResult<ClienteModel>> CreateCliente(ClienteCreateDto novoClienteDto)
         {
             if (!ModelState.IsValid)
             {

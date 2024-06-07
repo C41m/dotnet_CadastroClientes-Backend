@@ -3,9 +3,6 @@ using CadastroPessoas.Exceptions.CidadeExceptions;
 using CadastroPessoas.Models;
 using CadastroPessoas.Service.CidadeService;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
-using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace CadastroPessoas.Controllers
 {
@@ -120,34 +117,6 @@ namespace CadastroPessoas.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<CidadeModel>>> UpdateCidade(CidadeModel updateCidade)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                var cidades = await _cidadeInterface.UpdateCidade(updateCidade);
-                return Ok(cidades);
-            }
-
-            catch (CidadeNaoLocalizadaException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (CidadeJaExistenteException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPost]
         public async Task<ActionResult<List<CidadeModel>>> CreateCidade(CidadeCreateDto newCidadeDto)
         {
@@ -177,6 +146,42 @@ namespace CadastroPessoas.Controllers
             }
 
         }
+
+        [HttpPut]
+        public async Task<ActionResult<List<CidadeModel>>> UpdateCidade(CidadeUpdateDto newUpdateCidade)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updateCidade = new CidadeModel
+            {
+                Id = newUpdateCidade.Id,
+                Cidade = newUpdateCidade.Cidade,
+                Estado = newUpdateCidade.Estado
+            };
+
+            try
+            {
+                var cidades = await _cidadeInterface.UpdateCidade(updateCidade);
+                return Ok(cidades);
+            }
+
+            catch (CidadeNaoLocalizadaException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (CidadeJaExistenteException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpDelete]
         public async Task<ActionResult<List<CidadeModel>>> DeleteCidade(int id)

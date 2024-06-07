@@ -16,7 +16,6 @@ namespace CadastroPessoas.Service.CidadesService
             _context = context;
         }
 
-
         public async Task<List<CidadeModel>> GetCidades()
         {
 
