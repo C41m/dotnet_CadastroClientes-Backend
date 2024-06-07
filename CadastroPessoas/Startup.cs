@@ -31,10 +31,23 @@ namespace CadastroPessoas
                           .AllowAnyHeader();
                 });
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "CadastroClientesApi",
+                    Version = "v1"
+                });
+            });
+
+            services.AddControllers();
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,10 +55,12 @@ namespace CadastroPessoas
 
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI( options =>
+            app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "CadastroClientesApi");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "CadastroClientesApi v1");
                 options.RoutePrefix = String.Empty;
+
+
             });
 
             app.UseExceptionHandler("/Home/Error");

@@ -4,11 +4,11 @@ using CadastroPessoas.Exceptions.ClienteExceptions;
 using CadastroPessoas.Models;
 using CadastroPessoas.Service.ClienteService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 namespace CadastroPessoas.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase

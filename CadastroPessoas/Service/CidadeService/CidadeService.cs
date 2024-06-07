@@ -16,6 +16,84 @@ namespace CadastroPessoas.Service.CidadesService
             _context = context;
         }
 
+
+        public async Task<List<CidadeModel>> GetCidades()
+        {
+
+            try
+            {
+                var cidades = await _context.Cidades.ToListAsync();
+
+                return cidades;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public async Task<List<CidadeModel>> GetCidadeByName(string cidade)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(cidade))
+                {
+                    throw new CidadeNaoLocalizadaException(null, cidade);
+                }
+                var cidades = await _context.Cidades
+                    .Where(c => c.Cidade.Contains(cidade)) // Supondo que "Nome" seja o atributo que armazena o nome da cidade
+                    .ToListAsync();
+
+                return cidades;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<CidadeModel>> GetCidadeByEstado(string estado)
+        {
+            try
+            {
+                var cidades = await _context.Cidades.Where(x => x.Estado == estado).ToListAsync();
+
+                if (cidades.Count == 0)
+                {
+                    throw new CidadeNaoLocalizadaEstadoException(estado);
+                }
+
+                return cidades;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<CidadeModel> GetCidadeById(int id)
+        {
+            try
+            {
+                var cidade = await _context.Cidades.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (cidade == null)
+                {
+                    throw new CidadeNaoLocalizadaException(id, null);
+                }
+
+                return cidade;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<CidadeModel>> CreateCidade(CidadeModel novaCidade)
         {
             try
@@ -43,74 +121,6 @@ namespace CadastroPessoas.Service.CidadesService
             }
         }
 
-        public async Task<List<CidadeModel>> DeleteCidade(int id)
-        {
-            try
-            {
-                // Verificar se existe a cidade
-                var cidades = await _context.Cidades.FirstOrDefaultAsync(x => x.Id == id);
-                if (cidades == null)
-                {
-                    throw new CidadeNaoLocalizadaException(id);
-                }
-
-                // Verificar se existem clientes associados à cidade
-                var clientesNaCidade = await _context.Clientes.AnyAsync(x => x.CidadeId == id);
-                if (clientesNaCidade)
-                {    
-                    throw new CidadeComClienteException(id);
-                }
-
-                _context.Cidades.Remove(cidades);
-                await _context.SaveChangesAsync();
-
-                var cidadesList = await _context.Cidades.ToListAsync();
-
-                return cidadesList;
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<CidadeModel> GetCidadeById(int id)
-        {
-            try
-            {
-                var cidade = await _context.Cidades.FirstOrDefaultAsync(x => x.Id == id);
-
-                if (cidade == null)
-                {
-                    throw new CidadeNaoLocalizadaException(id);
-                }
-
-                return cidade;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<List<CidadeModel>> GetCidades()
-        {
-
-            try
-            {
-                var cidades = await _context.Cidades.ToListAsync();
-
-                return cidades;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-        }
-
         public async Task<List<CidadeModel>> UpdateCidade(CidadeModel editadoCidade)
         {
             {
@@ -120,7 +130,7 @@ namespace CadastroPessoas.Service.CidadesService
 
                     if (cidade == null)
                     {
-                        throw new CidadeNaoLocalizadaException(editadoCidade.Id);
+                        throw new CidadeNaoLocalizadaException(editadoCidade.Id, null);
                     }
 
                     var cidadeExistente = await _context.Cidades
@@ -148,25 +158,41 @@ namespace CadastroPessoas.Service.CidadesService
     ;
         }
 
-        public async Task<List<CidadeModel>> GetCidadeByEstado(string estado)
+        public async Task<List<CidadeModel>> DeleteCidade(int id)
         {
             try
             {
-                var cidades = await _context.Cidades.Where(x => x.Estado == estado).ToListAsync();
-
-                if (cidades.Count == 0)
-                { 
-                    throw new CidadeNaoLocalizadaEstadoException(estado);
+                // Verificar se existe a cidade
+                var cidades = await _context.Cidades.FirstOrDefaultAsync(x => x.Id == id);
+                if (cidades == null)
+                {
+                    throw new CidadeNaoLocalizadaException(id, null);
                 }
 
-                return cidades;
+                // Verificar se existem clientes associados à cidade
+                var clientesNaCidade = await _context.Clientes.AnyAsync(x => x.CidadeId == id);
+                if (clientesNaCidade)
+                {
+                    throw new CidadeComClienteException(id);
+                }
 
+                _context.Cidades.Remove(cidades);
+                await _context.SaveChangesAsync();
+
+                var cidadesList = await _context.Cidades.ToListAsync();
+
+                return cidadesList;
             }
+
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
+
+
+
     }
 }
 

@@ -28,7 +28,6 @@ namespace CadastroPessoas.Service.ClienteService
                 throw new ArgumentException($"Erro ao consultar clientes: {ex.Message}");
             }
 
-
         }
 
         public async Task<List<ClienteModel>> CreateClient(ClienteModel novoCliente)
@@ -39,7 +38,7 @@ namespace CadastroPessoas.Service.ClienteService
 
                 if (cidade == null)
                 {
-                    throw new CidadeNaoLocalizadaException(novoCliente.CidadeId);
+                    throw new CidadeNaoLocalizadaException(novoCliente.CidadeId, null);
                 }
 
                 novoCliente.Idade = CalcularIdade(novoCliente.DataNascimento);
@@ -114,8 +113,6 @@ namespace CadastroPessoas.Service.ClienteService
             }
         }
 
-     
-
         public async Task<List<ClienteModel>> UpdateCliente(ClienteModel editadoCliente)
         {
             try
@@ -131,7 +128,7 @@ namespace CadastroPessoas.Service.ClienteService
                 var cidadeExistente = await _context.Cidades.FindAsync(editadoCliente.CidadeId);
                 if (cidadeExistente == null)
                 {
-                    throw new CidadeNaoLocalizadaException(editadoCliente.CidadeId);
+                    throw new CidadeNaoLocalizadaException(editadoCliente.CidadeId, null);
                 }
 
                 // Atualiza cliente com os novos valores.

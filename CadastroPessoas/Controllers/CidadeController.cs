@@ -3,6 +3,9 @@ using CadastroPessoas.Exceptions.CidadeExceptions;
 using CadastroPessoas.Models;
 using CadastroPessoas.Service.CidadeService;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace CadastroPessoas.Controllers
 {
@@ -16,6 +19,7 @@ namespace CadastroPessoas.Controllers
         {
             _cidadeInterface = CidadeController;
         }
+
 
         [HttpGet]
         public async Task<ActionResult<List<CidadeModel>>> GetCidades()
@@ -88,6 +92,32 @@ namespace CadastroPessoas.Controllers
                 return BadRequest(ex.Message);
 
             }
+        }
+
+        [HttpGet("cidade/{cidade}")]
+        public async Task<ActionResult<CidadeModel>> GetCidadeByName(string cidade)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var cidades = await _cidadeInterface.GetCidadeByName(cidade);
+                return Ok(cidades);
+            }
+
+            catch (CidadeNaoLocalizadaEstadoException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
         }
 
         [HttpPut]
