@@ -12,14 +12,14 @@ Link do repositório do frontend: [C41m/react_CadastroClientes-Frontend (github.c
 Esta API permite o gerenciamento de cidades e clientes, incluindo operações como ler, criar, atualizar e excluir informações destas.
 
 ## Cidades - Endpoints Disponíveis
-### GET /api/Cidade
+### GET /cidades
 Retorna uma lista de todas as cidades cadastradas.
 
 #### Respostas
 - 200 OK: Retorna a lista de cidades.
 - 400 Bad Request: Se os dados da solicitação forem inválidos.
 - 500 Internal Server Error: Se ocorrer um erro interno do servidor.
-### GET /api/Cidade/{id}
+### GET /cidades/{id}
 
 Retorna os detalhes de uma cidade específica com base no ID fornecido.
 
@@ -34,7 +34,7 @@ Retorna os detalhes de uma cidade específica com base no ID fornecido.
 -   404 Not Found: Se a cidade não for encontrada com o ID fornecido.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### GET /api/Cidade/estado/{estado}
+### GET /cidades/estado/{estado}
 
 Retorna uma lista de cidades com base no estado fornecido.
 
@@ -49,7 +49,7 @@ Retorna uma lista de cidades com base no estado fornecido.
 -   404 Not Found: Se nenhuma cidade for encontrada para o estado.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### GET /api/Cidade/cidade/{cidade}
+### GET /cidades/cidade/
 
 Retorna detalhes de uma cidade com base no nome.
 
@@ -64,7 +64,7 @@ Retorna detalhes de uma cidade com base no nome.
 -   404 Not Found: Se a cidade não for encontrada com o nome fornecido.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### POST /api/Cidade
+### POST /cidades
 
 Cria uma nova cidade com os dados fornecidos.
 
@@ -81,7 +81,7 @@ Um objeto JSON contendo os seguintes campos:
 -   400 Bad Request: Se os dados da solicitação forem inválidos ou se a cidade já existir.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### PUT /api/Cidade
+### PUT /cidades/{id}
 
 Atualiza os dados de uma cidade existente com base no ID.
 
@@ -100,7 +100,7 @@ Um objeto JSON contendo os seguintes campos:
 -   404 Not Found: Se a cidade não for encontrada com o ID fornecido.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### DELETE /api/Cidade
+### DELETE /cidades/{id}
 
 Exclui uma cidade com base no ID.
 
@@ -117,7 +117,7 @@ Exclui uma cidade com base no ID.
 ---
 ## Clientes- Endpoints Disponíveis
 
-### GET /api/Cliente
+### GET /clientes
 
 Retorna todos os clientes cadastrados.
 
@@ -128,7 +128,7 @@ Retorna todos os clientes cadastrados.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
 
-### GET /api/Cliente/FindById/{id}
+### GET /clientes/{id}
 
 Retorna detalhes de um cliente com base em um ID.
 
@@ -143,7 +143,7 @@ Retorna detalhes de um cliente com base em um ID.
 -   404 Not Found: Se nenhum cliente corresponder ao ID.
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
-### GET /api/Cliente/FindByName
+### GET /clientes/buscar
 
 Retorna uma lista de clientes com base em parte do nome e/ou sobrenome fornecido.
 
@@ -160,7 +160,7 @@ Retorna uma lista de clientes com base em parte do nome e/ou sobrenome fornecido
 -   500 Internal Server Error: Se ocorrer um erro interno do servidor.
 
 
-### POST /api/Cliente
+### POST /clientes
 
 Cria um novo cliente com base nos dados fornecidos.
 
@@ -183,14 +183,13 @@ Cria um novo cliente com base nos dados fornecidos.
 
 ----------
 
-### PUT /api/Cliente
+### PUT /clientes/{id}
 
 Atualiza os detalhes de um cliente com base nos dados.
 
 #### Corpo da Solicitação
 
 	{
-		"Id": "int",
 		"Nome": "string",
 		"Sobrenome": "string",
 		"Sexo": "string",
@@ -208,7 +207,7 @@ Atualiza os detalhes de um cliente com base nos dados.
 
 ----------
 
-### DELETE /api/Cliente
+### DELETE /clientes/{id}
 
 Exclui um cliente com base no ID.
 
