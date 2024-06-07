@@ -36,9 +36,10 @@ namespace CadastroPessoas.Controllers
 
                 return Ok(clientes);
             }
+
             catch (DbException ex)
             {
-                return BadRequest($"Erro ao consultar clientes no banco:{ex.Message}");
+                return BadRequest(ex.Message);
             }
 
         }
@@ -132,7 +133,6 @@ namespace CadastroPessoas.Controllers
 
             var editadoCliente = new ClienteModel
             {
-
                 Id = editadoClienteDto.Id,
                 Nome = editadoClienteDto.Nome,
                 Sobrenome = editadoClienteDto.Sobrenome,

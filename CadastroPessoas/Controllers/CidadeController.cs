@@ -30,10 +30,6 @@ namespace CadastroPessoas.Controllers
                 var cidade = await _cidadeInterface.GetCidades();
                 return Ok(cidade);
             }
-            catch (SemCidadeCadastradasException ex)
-            {
-                return NotFound(ex.Message);
-            }
 
             catch (Exception ex)
             {

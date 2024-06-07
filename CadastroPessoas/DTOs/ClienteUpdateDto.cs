@@ -8,7 +8,7 @@ namespace CadastroPessoas.DTOs
 {
     public class ClienteUpdateDto
     {
-        [Required(ErrorMessage = "Preencha o campo ID!")]
+        [Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo nome!")]

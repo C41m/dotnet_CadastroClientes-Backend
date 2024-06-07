@@ -2,6 +2,7 @@
 using CadastroPessoas.Exceptions.CidadeExceptions;
 using CadastroPessoas.Exceptions.ClienteExceptions;
 using CadastroPessoas.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace CadastroPessoas.Service.ClienteService
@@ -18,12 +19,6 @@ namespace CadastroPessoas.Service.ClienteService
             try
             {
                 var clientes = await _context.Clientes.Include(c => c.Cidade).ToListAsync();
-
-                if (clientes.Count == 0)
-                {
-                    // throw new ArgumentException("Sem clientes cadastrados!");
-
-                }
 
                 return clientes;
 
@@ -98,9 +93,8 @@ namespace CadastroPessoas.Service.ClienteService
 
                 if (!string.IsNullOrEmpty(sobrenomeCliente))
                 {
-                    clienteBuscado = clienteBuscado.Where(x => x.Nome.Contains(sobrenomeCliente));
+                    clienteBuscado = clienteBuscado.Where(x => x.Sobrenome.Contains(sobrenomeCliente));
                 }
-
 
                 var clientes = await clienteBuscado.ToListAsync();
 

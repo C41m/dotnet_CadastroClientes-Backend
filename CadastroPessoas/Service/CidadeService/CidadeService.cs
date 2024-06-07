@@ -101,11 +101,6 @@ namespace CadastroPessoas.Service.CidadesService
             {
                 var cidades = await _context.Cidades.ToListAsync();
 
-                if (cidades.Count == 0)
-                {
-                    throw new SemCidadeCadastradasException();
-                }
-
                 return cidades;
 
             }
